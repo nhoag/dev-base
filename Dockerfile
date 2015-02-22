@@ -23,7 +23,8 @@ RUN apt-get update && \
   chsh -s /bin/zsh && \
   git clone --depth=1 --recursive https://github.com/sorin-ionescu/prezto.git /root/.zprezto && \
   for rc in /root/.zprezto/runcoms/z* ; do ln -s "${rc}" "/root/.$(basename $rc)" ; done && \
-  exec zsh && setopt EXTENDED_GLOB
+  exec zsh && setopt EXTENDED_GLOB && \
+  sed -i 's/nano/vi/g' /root/.zprofile
 
 ADD vimrc /root/.vimrc
 ADD zshrc /root/.zshrc
