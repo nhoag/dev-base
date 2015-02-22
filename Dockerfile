@@ -20,10 +20,13 @@ RUN apt-get update && \
   git clone --depth=1 https://github.com/garbas/vim-snipmate.git ~/.vim/bundle/vim-snipmate && \
   git clone --depth=1 https://github.com/honza/vim-snippets.git ~/.vim/bundle/vim-snippets && \
   git clone --depth=1 https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround && \
-  chsh -s /bin/zsh && \
-  git clone --depth=1 --recursive https://github.com/sorin-ionescu/prezto.git /root/.zprezto && \
+  git clone --depth=1 --recursive https://github.com/sorin-ionescu/prezto.git /root/.zprezto
+
+RUN sed -i 's/nano/vi/g' /root/.zprezto/runcoms/zprofile
+
+RUN chsh -s /bin/zsh && \
   for rc in /root/.zprezto/runcoms/z* ; do ln -s "${rc}" "/root/.$(basename $rc)" ; done && \
-  exec zsh && setopt EXTENDED_GLOB && sed -i 's/nano/vi/g' /root/.zprezto/runcoms/zprofile
+  exec zsh && setopt EXTENDED_GLOB
 
 ADD vimrc /root/.vimrc
 ADD zshrc /root/.zshrc
